@@ -4,12 +4,12 @@
 # ------ Create Virtual Network Gateway on Azure
 resource "azurerm_virtual_network_gateway" "virtual_network_gateway" {
   provider            = azurerm.azure
-  name = var.virtual_network_gateway_name
+  name                = var.virtual_network_gateway_name
   location            = azurerm_resource_group.resource_group.location
   resource_group_name = azurerm_resource_group.resource_group.name
 
-  type     = "ExpressRoute"
-  sku           = "UltraPerformance"
+  type = "ExpressRoute"
+  sku  = "UltraPerformance"
 
   ip_configuration {
     name                          = "vnetGatewayConfig"
@@ -21,12 +21,12 @@ resource "azurerm_virtual_network_gateway" "virtual_network_gateway" {
 
 # ------ Create Virtual Network Gateway ExpressRoute Connection 
 resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_connection" {
-  provider            = azurerm.azure
-  name = var.virtual_network_gateway_connection_name
-  location            = azurerm_resource_group.resource_group.location
-  resource_group_name = azurerm_resource_group.resource_group.name
+  provider                     = azurerm.azure
+  name                         = var.virtual_network_gateway_connection_name
+  location                     = azurerm_resource_group.resource_group.location
+  resource_group_name          = azurerm_resource_group.resource_group.name
   express_route_gateway_bypass = "true"
-  type                            = "ExpressRoute"
-  virtual_network_gateway_id      = azurerm_virtual_network_gateway.virtual_network_gateway.id
-  express_route_circuit_id        = azurerm_express_route_circuit.express_route_circuit.id
+  type                         = "ExpressRoute"
+  virtual_network_gateway_id   = azurerm_virtual_network_gateway.virtual_network_gateway.id
+  express_route_circuit_id     = azurerm_express_route_circuit.express_route_circuit.id
 }

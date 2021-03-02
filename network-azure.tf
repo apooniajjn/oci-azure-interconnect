@@ -130,7 +130,7 @@ resource "azurerm_subnet_network_security_group_association" "compute_subnet_net
 
 # ------ Associate Network Security Group to Compute VM NIC
 resource "azurerm_network_interface_security_group_association" "compute_nic_network_security_group" {
-  provider            = azurerm.azure
+  provider                  = azurerm.azure
   network_interface_id      = azurerm_network_interface.compute_vm_vnic.id
   network_security_group_id = azurerm_network_security_group.azure_nsg.id
 }

@@ -3,7 +3,7 @@
 
 # ------ Initialize Azure Terraform provider
 provider "azurerm" {
-  alias = "azure"
+  alias   = "azure"
   version = "=2.20.0"
   features {}
 }
@@ -16,6 +16,6 @@ provider "oci" {
   user_ocid        = var.user_ocid
   fingerprint      = var.fingerprint
   private_key_path = var.private_key_path
-  region = var.region
+  region           = var.region
 }
 

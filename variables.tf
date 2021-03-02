@@ -1,49 +1,66 @@
 ## Copyright © 2020, Oracle and/or its affiliates. 
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
+############################
+#  OCI Tenancy Credentials #
+############################
+
 variable "tenancy_ocid" {
-}
-
-variable "user_ocid" {}
-
-variable "region" {
-  default = "us-sanjose-1"
-}
-
-variable "private_key_path" {
-  default = "~/.oci/oci_api_key.pem"
+  description = "User Tenancy OCID"
 }
 
 variable "compartment_ocid" {
+  description = "User Compartment OCID"
+}
+
+variable "region" {
+  description = "User Region Value"
+}
+
+variable "user_ocid" {
+  description = "User OCID"
+}
+
+variable "fingerprint" {
+  description = "User Private Key Fingerprint"
+}
+
+variable "private_key_path" {
+  description = "User Private Key Path"
 }
 
 variable "ssh_public_key" {
   description = "SSH Public Key String"
 }
 
-variable "ssh_private_key_path" {
-  default = "~/.ssh/id_oracle"
-}
-
-variable "fingerprint" {
-}
+############################
+# Azure Region Credentials #
+############################
 
 variable "azure_region" {
+  description = "Azure Region Name"
 }
 
 variable "peering_location" {
+  description = "Azure Peering Location Where OCI providor exists"
 }
 
 variable "bandwidth" {
+  description = "Azure ExpressRoute Circuit Bandwidth"
 }
 
+############################
+# Instance Credentials #
+############################
+
 variable "InstanceShape" {
-  default = "VM.Standard2.1"
+  description = "Instance Default Size"
+  default     = "VM.Standard2.1"
 }
 
 variable "InstanceImageOCID" {
-  type = map
-
+  description = "Instance Image OCID Associated with Each Region"
+  type        = map
   default = {
     // See https://docs.us-phoenix-1.oraclecloud.com/images/
     // Oracle-provided image "Oracle-Linux-7.4-2018.02.21-1"
@@ -57,83 +74,98 @@ variable "InstanceImageOCID" {
   }
 }
 
-variable "db_password" {
-  default = "PAssw0rd_#1234"
-}
-
-variable "db_name" {
-  default = "customer"
-}
-
-variable "pdb_name" {
-  default = "custom"
-}
-
-variable "oe_data_scale" {
-  default = "10"
-}
-
-variable "sh_data_scale" {
-  default = "10"
-}
-
-variable "tp_data_scale" {
-  default = "10"
-}
-
-
-variable "azure_express_circuit_name" {
-  default = "azure_express_circuit"
-}
+############################
+# Azure Variables  #
+############################
 
 variable "azure_resource_group_name" {
-  default = "azure_oci_arun_test"
+  description = "Azure Resource Group Name"
+  default     = "azure_oci_test_resources"
+}
+
+variable "azure_vnet_address" {
+  description = "Azure VNET Address Range"
+  default     = "10.12.0.0/16"
+}
+
+variable "azure_gateway_subnet" {
+  description = "Azure Gateway Subnet Address Range"
+  default     = "10.12.1.0/24"
+}
+
+variable "azure_compute_subnet" {
+  description = "Azure Compute Subnet Address Range"
+  default     = "10.12.2.0/24"
+}
+
+variable "azure_compute_vnic_name" {
+  description = "Azure Compute VM NIC Name"
+  default     = "compute-vm-nic"
+}
+
+variable "azure_compute_machine_name" {
+  description = "Azure Compute VM Name"
+  default     = "azure-compute-name"
+}
+
+variable "azure_express_circuit_name" {
+  description = "Azure Express Route circuit Name"
+  default     = "azure_express_circuit"
 }
 
 variable "azure_virtual_network_name" {
-  default = "oci_network"
+  description = "Azure Virtual Network Name"
+  default     = "oci_network"
 }
 
 variable "gateway_subnet_name" {
-  default = "GatewaySubnet"
+  description = "Azure Gateway Subnet Name"
+  default     = "GatewaySubnet"
 }
 
 variable "compute_subnet_name" {
-  default = "ComputeSubnet"
+  description = "Azure Compte Subnet Name for VMs"
+  default     = "ComputeSubnet"
 }
 
 variable "gateway_public_ip_name" {
-  default = "GatewayPublicIP"
+  description = "Azure Gateway Public IP Name"
+  default     = "GatewayPublicIP"
 }
 
 variable "azure_vm_public_ip_name" {
-  default = "AzureVMPublicIP"
+  description = "Azure VM Public IP Name"
+  default     = "AzureVMPublicIP"
 }
 
 variable "azure_route_table_name" {
-
-  default = "azure_route_table"
-
+  description = "Azure Route Table Name"
+  default     = "azure_route_table"
 }
 
 variable "azure_nsg_name" {
-  default = "azure-oci-nsg"
-}
-
-variable "virtual_network_gateway_connection_name" {
-  default = "azure_to_oci"
+  description = "Azure Network Security Group Name"
+  default     = "azure-oci-nsg"
 }
 
 variable "virtual_network_gateway_name" {
-  default = "InterConnectVNETGateway"
+  description = "Azure Network Gateway Name"
+  default     = "InterConnectVNETGateway"
 }
 
+variable "virtual_network_gateway_connection_name" {
+  description = "Azure Network Gateway Connection Name"
+  default     = "azure_to_oci"
+}
+
+###########################################
+#  Oracle Cloud Infrastructure Variables  #
+###########################################
 
 variable "interconnect_vcn_cidr_block" {
   description = "Interconnect VCN CIDR"
   default     = "10.1.0.0/16"
 }
-
 
 variable "oci_compute_subnet_display_name" {
   description = "Compute Subnet Name"
@@ -149,7 +181,6 @@ variable "oci_compute_subnet_dns_label" {
   description = "Compute Subnet DNS Label"
   default     = "computesubnet"
 }
-
 
 variable "oci_database_subnet_display_name" {
   description = "Compute Subnet Name"
@@ -167,43 +198,26 @@ variable "oci_database_subnet_dns_label" {
 }
 
 variable "internet_gateway_name" {
-  default = "IGW"
+  description = "OCI Internet Gateway Name"
+  default     = "IGW"
 }
 
 variable "compute_route_table_display_name" {
-  default = "ComputeRouteTable"
+  description = "OCI Compute Route Table Name"
+  default     = "ComputeRouteTable"
 }
 
 variable "database_route_table_display_name" {
-  default = "DatabaseRouteTable"
+  description = "OCI Database Route Table Name"
+  default     = "DatabaseRouteTable"
 }
 
 variable "security_policy_name" {
-  default = "AzureSecurityList"
+  description = "OCI Security Policy Name"
+  default     = "AzureSecurityList"
 }
 
 variable "oci_compute_instance_name" {
-    default = "ComputeVM"
-}
-
-### Azure 
-
-variable "azure_vnet_address" {
-  default = "10.12.0.0/16"
-}
-
-variable "azure_gateway_subnet" {
-  default = "10.12.1.0/24"
-}
-
-variable "azure_compute_subnet" {
-  default = "10.12.2.0/24"
-}
-
-variable "azure_compute_vnic_name" {
-  default = "compute-vm-nic"
-}
-
-variable "azure_compute_machine_name" {
-  default = "azure-compute-name"
+  description = "OCI Compute VM Name"
+  default     = "ComputeVM"
 }

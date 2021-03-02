@@ -28,9 +28,9 @@ resource "oci_core_subnet" "compute_subnet" {
 resource "oci_core_subnet" "database_subnet" {
   provider            = oci.oci
   availability_domain = data.oci_identity_availability_domain.AD.name
-  cidr_block   = var.oci_database_subnet
-  display_name = var.oci_database_subnet_display_name
-  dns_label    = var.oci_database_subnet_dns_label
+  cidr_block          = var.oci_database_subnet
+  display_name        = var.oci_database_subnet_display_name
+  dns_label           = var.oci_database_subnet_dns_label
 
   security_list_ids = [oci_core_security_list.security_policies_azure.id]
   compartment_id    = var.compartment_ocid
@@ -86,7 +86,6 @@ resource "oci_core_route_table" "database_route_table" {
 resource "oci_core_drg" "drg_azure" {
   provider       = oci.oci
   compartment_id = var.compartment_ocid
-
 }
 
 # ------ Create Security Policies on Azure

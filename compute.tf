@@ -45,27 +45,6 @@ resource "azurerm_linux_virtual_machine" "azure_compute_vm" {
     sku       = "77"
     version   = "latest"
   }
-  # provisioner "file" {
-  #   content     = "${file(var.ssh_private_key_path)}"
-  #   destination = "/tmp/ssh.key"
-  #   connection {
-  #     host        = "${self.public_ip_address}"
-  #     type        = "ssh"
-  #     user        = "adminuser"
-  #     private_key = "${file(var.ssh_private_key_path)}"
-  #   }
-  # }
-
-  # provisioner "file" {
-  #   source      = "${data.archive_file.artifacts.output_path}"
-  #   destination = "/tmp/artifacts.zip"
-  #   connection {
-  #     host        = "${self.public_ip_address}"
-  #     type        = "ssh"
-  #     user        = "adminuser"
-  #     private_key = "${file(var.ssh_private_key_path)}"
-  #   }
-  # }
 }
 
 # ------ Create Compute VM on OCI
@@ -74,7 +53,6 @@ resource "oci_core_instance" "oci_compute_instance" {
   availability_domain = data.oci_identity_availability_domain.AD.name
   compartment_id      = var.compartment_ocid
   display_name        = var.oci_compute_instance_name
-  # image               = var.InstanceImageOCID[var.region]
   shape               = var.InstanceShape
 
   create_vnic_details {
@@ -84,12 +62,12 @@ resource "oci_core_instance" "oci_compute_instance" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
-    # user_data           = "${base64encode(file("scripts/userdata.tpl"))}"
   }
 
   source_details {
-    source_type = "image"
-    source_id   = var.InstanceImageOCID[var.region]
+    source_type             = "image"
+    source_id               = data.oci_core_images.InstanceImageOCID.images[0].id
+    boot_volume_size_in_gbs = "50"
   }
 
   timeouts {
